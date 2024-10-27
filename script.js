@@ -5,8 +5,8 @@ let attempts = 0;
 let totalResponseTime = 0;
 let responseCount = 0;
 let digitCount = 5;
-let timeLimit = 10; // Sekunder før det stopper automatisk
-let volume = 0.5; // Startvolum
+let timeLimit = 10;
+let volume = 0.5;
 let isPaused = false;
 
 const correctSound = document.getElementById("correctSound");
@@ -21,7 +21,7 @@ function generateRandomNumber() {
   const number = Math.floor(Math.random() * (max - min + 1) + min).toString();
   document.getElementById("prompt").innerText = `Hva er den digitale roten av tallet: ${number}`;
   startTime = new Date().getTime();
-  startTimer(); // Start tidsbegrensningen
+  startTimer();
   return number;
 }
 
@@ -80,19 +80,11 @@ function resetGame() {
   document.getElementById("userGuess").value = "";
 }
 
-function pauseGame() {
-  isPaused = !isPaused;
-  document.getElementById("feedback").innerText = isPaused ? "Spillet er pauset." : "";
-  if (!isPaused) startTimer();
-}
-
-function stopGame() {
-  clearTimeout(timer);
-  clearInterval(countdownTimer);
-  document.getElementById("feedback").innerText = "Spillet er stoppet.";
-}
-
 function startGame() {
+  clearInterval(countdownTimer);
+  document.body.style.backgroundColor = "red";
+  document.body.style.color = "black";
+
   let countdown = 4;
   document.getElementById("feedback").innerText = `Starter om ${countdown}`;
   countdownTimer = setInterval(() => {
@@ -105,6 +97,34 @@ function startGame() {
       document.getElementById("feedback").innerText = `Starter om ${countdown}`;
     }
   }, 1000);
+}
+
+function pauseGame() {
+  isPaused = !isPaused;
+  document.getElementById("feedback").innerText = isPaused ? "Spillet er pauset." : "";
+  document.body.style.backgroundColor = isPaused ? "yellow" : "red";
+  if (!isPaused) startTimer();
+}
+
+function stopGame() {
+  clearTimeout(timer);
+  clearInterval(countdownTimer);
+  document.getElementById("feedback").innerText = "Spillet er stoppet.";
+  document.body.style.backgroundColor = "white";
+  document.body.style.color = "black";
+}
+
+function showInstructions(event) {
+  const isShiftPressed = event.shiftKey;
+  const instructionsPanel = document.getElementById("instructions-panel");
+  const instructionsText = document.getElementById("instructions-text");
+
+  instructionsPanel.style.display = "block";
+  instructionsText.readOnly = !isShiftPressed;
+}
+
+function closeInstructions() {
+  document.getElementById("instructions-panel").style.display = "none";
 }
 
 function increaseVolume() {
@@ -149,5 +169,3 @@ function applySettings() {
 
   closeSettings();
 }
-
-currentNumber = generateRandomNumber();

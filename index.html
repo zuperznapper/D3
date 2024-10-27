@@ -21,6 +21,7 @@
     <button onclick="increaseVolume()">Volum +</button>
     <button onclick="decreaseVolume()">Volum -</button>
     <button onclick="openSettings()">Innstillinger</button>
+    <button onclick="showInstructions(event)">Bruksanvisning</button>
   </div>
 
   <!-- Innstillinger-panel -->
@@ -40,6 +41,19 @@
     
     <button onclick="applySettings()">Bruk</button>
     <button onclick="closeSettings()">Lukk</button>
+  </div>
+
+  <!-- Bruksanvisnings-panel -->
+  <div id="instructions-panel" style="display: none;">
+    <h2>Bruksanvisning</h2>
+    <textarea id="instructions-text" readonly>
+      Velkommen til Digroot!
+      Slik spiller du:
+      1. Klikk på "Start" for å begynne.
+      2. Beregn den digitale roten av det viste tallet.
+      3. Skriv inn roten i feltet og få tilbakemelding!
+      </textarea>
+    <button onclick="closeInstructions()">Lukk</button>
   </div>
 
   <audio id="correctSound" src="correct.mp3"></audio>
