@@ -47,7 +47,7 @@ function calculateDigitalRoot(number) {
 }
 
 function handleInput(event) {
-  if (isPaused) return;
+  if (isPaused) return; // Unngå inputbehandling hvis spillet er pauset
 
   const userGuess = parseInt(event.target.value);
   const feedback = document.getElementById("feedback");
@@ -81,10 +81,12 @@ function resetGame() {
 }
 
 function startGame() {
-  clearInterval(countdownTimer);
+  isPaused = false; // Nullstill pause-status
+  document.getElementById("pauseButton").innerText = "Pause"; // Sett knappen tilbake til Pause
   document.body.style.backgroundColor = "red";
   document.body.style.color = "black";
 
+  clearInterval(countdownTimer);
   let countdown = 4;
   document.getElementById("feedback").innerText = `Starter om ${countdown}`;
   countdownTimer = setInterval(() => {
@@ -100,10 +102,14 @@ function startGame() {
 }
 
 function pauseGame() {
-  isPaused = !isPaused;
+  isPaused = !isPaused; // Veksle mellom pauset og gjenopptatt status
   document.getElementById("feedback").innerText = isPaused ? "Spillet er pauset." : "";
   document.body.style.backgroundColor = isPaused ? "yellow" : "red";
-  if (!isPaused) startTimer();
+
+  // Oppdater knappeetiketten til "Fortsett" hvis pauset, ellers "Pause"
+  document.getElementById("pauseButton").innerText = isPaused ? "Fortsett" : "Pause";
+
+  if (!isPaused) startTimer(); // Hvis gjenopptatt, start timeren igjen
 }
 
 function stopGame() {
